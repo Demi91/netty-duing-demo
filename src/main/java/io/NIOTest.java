@@ -12,30 +12,10 @@ public class NIOTest {
 
 
     public static void main(String[] args) throws Exception {
-        copy("nio.txt","nio_new.txt");
+
 
     }
 
-    public static void copy(String sourceFile, String targetFile) throws Exception {
-        File source = new File(sourceFile);
-        File target = new File(targetFile);
-        if(!target.exists())  target.createNewFile();
-
-        FileInputStream fis = new FileInputStream(sourceFile);
-        FileChannel inChannel = fis.getChannel();
-
-        FileOutputStream fos = new FileOutputStream(targetFile);
-        FileChannel outChannel = fos.getChannel();
-
-        MappedByteBuffer buffer = inChannel.map(FileChannel.MapMode.READ_ONLY, 0 ,source.length());
-        outChannel.write(buffer);
-        buffer.clear();
-
-        inChannel.close();
-        fis.close();
-        outChannel.close();
-        fos.close();
-    }
 
 
     public static void testBuffer() throws Exception{
