@@ -1,18 +1,21 @@
 package com.duing.nio;
 
+import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 
 public class BufferTest {
 
     public static void main(String[] args) {
 
-        CharBuffer buffer = CharBuffer.allocate(8);
+//        CharBuffer buffer = CharBuffer.allocate(8);
+        ByteBuffer buffer = ByteBuffer.allocate(8);
         System.out.println("capacity:" + buffer.capacity());
         System.out.println("limit:" + buffer.limit());
         System.out.println("position:" + buffer.position());
 
-        buffer.put('y');
-        buffer.put('u');
+//        buffer.put('y');
+//        buffer.put('u');
+        buffer.put("yu".getBytes());
         System.out.println("=========存入y&u");
         System.out.println("position:" + buffer.position());
 
