@@ -5,12 +5,38 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
+import io.netty.util.ReferenceCountUtil;
 
 // 自定义handler的方式之一
 //    继承ChannelInboundHandlerAdapter
 //       提供了在不同时期会触发的方法
 //    channelActive   channelRead   channelReadComplete
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("handlerAdded done");
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("handlerRemoved done");
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channelUnregistered done");
+    }
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channelRegistered done");
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channelInactive done");
+    }
 
     // ctrl + o 实现父类的方法
 
@@ -24,7 +50,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         // 写数据时  可以调用writeAndFlush 直接写入字符串
         // 底层还是封装了  获取通道 - 创建缓冲区 - 写入数据 - 缓冲区写入通道 等流程
         System.out.println("channelActive done");
-        ctx.writeAndFlush("Welcome to Netty Server");
+//        ctx.writeAndFlush("Welcome to Netty Server");
 //        super.channelActive(ctx);
     }
 
@@ -39,6 +65,9 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("client msg : " + buf.toString(CharsetUtil.UTF_8));
         // 可以定位到客户端的远程地址  通过 通道的remoteAddress方法
         System.out.println("client is from " + ctx.channel().remoteAddress());
+
+        // 释放ByteBuf内存
+        ReferenceCountUtil.release(msg);
 //        super.channelRead(ctx, msg);
     }
 
