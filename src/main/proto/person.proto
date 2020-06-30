@@ -1,0 +1,12 @@
+// 声明包名称的空间
+syntax="proto3";
+// 生成代码的目录地址
+option java_package="com.duing";
+// 生成的类名
+option java_outer_classname="PersonModel";
+
+// 类结构
+message Person{
+    int32 id = 1; // 此处1代表的是顺序
+    string name = 2;
+}
